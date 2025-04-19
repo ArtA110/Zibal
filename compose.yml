@@ -22,5 +22,35 @@ services:
     env_file:
       - .env
 
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  celery:
+    build: .
+    command: celery -A core.celery.app worker --loglevel=info
+    volumes:
+      - ./core:/app
+    depends_on:
+      - backend
+      - redis
+    env_file:
+      - .env
+
+  celery-beat:
+    build: .
+    command: celery -A core.celery.app beat --loglevel=info
+    volumes:
+      - ./core:/app
+    depends_on:
+      - backend
+      - redis
+    env_file:
+      - .env
+
 volumes:
   mongo_data:
+  redis_data:

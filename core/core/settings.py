@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'report',
+    'notification',
 ]
 
 MIDDLEWARE = [
@@ -110,6 +111,19 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Celery
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+CELERY_BEAT_SCHEDULE = {
+    'retry-failed-notifications': {
+        'task': 'notifications.tasks.retry_failed_notifications',
+        'schedule': 60,
+    },
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

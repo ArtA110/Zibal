@@ -3,3 +3,6 @@ dnspython
 pymongo
 djangorestframework
 jdatetime
+celery
+redis
+django-redis
