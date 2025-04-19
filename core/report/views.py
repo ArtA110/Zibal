@@ -128,4 +128,4 @@ class TransactionReportView(APIView):
                 key = f"{month_name} {jalali_date.year}"
 
             formatted_results.append({"key": key, "value": item["value"]})
-            return formatted_results
+        return formatted_results
