@@ -1,0 +1,20 @@
+__pycache__/
+*.py[cod]
+*$py.class
+
+**/migrations/
+!**/migrations/__init__.py
+
+db.sqlite3
+
+# Environment variables
+# .env Should be on git but for this project I exclude that for easier setup
+
+
+venv/
+ENV/
+env/
+.venv/
+
+.vscode/
+.idea/
