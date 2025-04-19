@@ -129,3 +129,29 @@ class TransactionReportView(APIView):
 
             formatted_results.append({"key": key, "value": item["value"]})
         return formatted_results
+
+
+
+class TransactionSummaryAPI(APIView):
+    def get(self, request):
+        merchant_id = request.query_params.get('merchantId', None)
+        _type = request.query_params.get('type', None)
+        mode = request.query_params.get('mode', None)
+        
+        
+        
+        query = {'type': mode}
+        if merchant_id:
+            query['merchantId'] = ObjectId(merchant_id)
+        
+        
+        value = 'count' if _type == 'amount' else 'totalAmount'
+        
+        results = list(db.summary_transaction.find(query))
+        
+        for r in results:
+            r.pop('_id')
+            r.pop('merchantId')
+            r.pop(value)
+        
+        return Response(results)
